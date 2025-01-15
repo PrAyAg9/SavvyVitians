@@ -14,7 +14,7 @@ interface Course {
   color: string;
 }
 
-// Slot mapping
+// iss wale ko gpt ai ke auth se rakhna api acode ke AG
 const slotMapping: { [day: string]: string[] } = {
   Monday: ["A11", "B11", "C11", "A21", "A14", "B21", "C21"],
   Tuesday: ["D11", "E11", "F11", "D21", "E14", "B22", "F21"],
@@ -56,10 +56,10 @@ const FFCSHelp = () => {
     setCourseInput({ ...courseInput, [name]: value });
   };
 
-  // All occupied slots
+
   const getOccupiedSlots = () => courses.flatMap((course) => course.slots);
 
-  // Validate
+
   const validateInputs = () => {
     const { code, name, faculty, credits, slots, venue } = courseInput;
     if (!code.trim() || !name.trim() || !faculty.trim() || !credits.trim() || !slots.trim() || !venue.trim()) {
@@ -81,7 +81,7 @@ const FFCSHelp = () => {
     return true;
   };
 
-  // Add course
+
   const addCourse = () => {
     if (!validateInputs()) return;
     const { code, name, faculty, credits, slots, venue } = courseInput;
@@ -114,7 +114,7 @@ const FFCSHelp = () => {
     });
   };
 
-  // Remove course
+
   const removeCourse = (id: string) => {
     const c = courses.find((course) => course.id === id);
     if (!c) return;
@@ -122,21 +122,21 @@ const FFCSHelp = () => {
     setTotalCredits(totalCredits - parseInt(c.credits));
   };
 
-  // Change color from Selected Courses
+
   const handleColorChange = (id: string, color: string) => {
     setCourses((prev) =>
       prev.map((c) => (c.id === id ? { ...c, color } : c))
     );
   };
 
-  // Change color from Timetable
+
   const handleTimetableColorChange = (id: string, color: string) => {
     setCourses((prev) =>
       prev.map((c) => (c.id === id ? { ...c, color } : c))
     );
   };
 
-  // Render a cell
+
   const renderTimetableCell = (slot: string) => {
     const c = courses.find((course) => course.slots.includes(slot));
     if (!c) {
@@ -195,13 +195,11 @@ const FFCSHelp = () => {
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Add Course */}
         <div className="bg-white p-4 sm:p-6 rounded shadow space-y-4">
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800">
             Add a Course
           </h2>
           <div className="text-sm space-y-3">
-            {/* Course Code */}
             <div>
               <label className="block mb-1 font-medium">Course Code</label>
               <input
@@ -211,7 +209,6 @@ const FFCSHelp = () => {
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {/* Course Name */}
             <div>
               <label className="block mb-1 font-medium">Course Name</label>
               <input
@@ -221,7 +218,6 @@ const FFCSHelp = () => {
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {/* Faculty */}
             <div>
               <label className="block mb-1 font-medium">Faculty</label>
               <input
@@ -231,7 +227,6 @@ const FFCSHelp = () => {
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {/* Credits */}
             <div>
               <label className="block mb-1 font-medium">Credits</label>
               <select
@@ -248,7 +243,6 @@ const FFCSHelp = () => {
                 ))}
               </select>
             </div>
-            {/* Slots */}
             <div>
               <label className="block mb-1 font-medium">Slots</label>
               <input
@@ -262,7 +256,6 @@ const FFCSHelp = () => {
                 Occupied: {getOccupiedSlots().join(", ") || "None"}
               </p>
             </div>
-            {/* Venue */}
             <div>
               <label className="block mb-1 font-medium">Venue</label>
               <input
@@ -283,7 +276,7 @@ const FFCSHelp = () => {
           </div>
         </div>
 
-        {/* Timetable + Selected Courses */}
+
         <div className="lg:col-span-2 space-y-6">
           {/* Timetable */}
           <div id="timetable" className="bg-white p-4 sm:p-6 rounded shadow">
@@ -340,7 +333,6 @@ const FFCSHelp = () => {
             </div>
           </div>
 
-          {/* Selected Courses */}
           <div
             id="selected-courses"
             className="bg-white p-4 sm:p-6 rounded shadow"
@@ -358,7 +350,6 @@ const FFCSHelp = () => {
                   className="bg-gray-50 p-3 rounded flex items-center justify-between"
                 >
                   <div className="flex items-center space-x-4">
-                    {/* Color Picker */}
                     <div className="flex items-center">
                       <label className="mr-2 text-sm text-gray-700">Color:</label>
                       <input
@@ -368,7 +359,6 @@ const FFCSHelp = () => {
                         className="w-6 h-6 border border-gray-300 rounded"
                       />
                     </div>
-                    {/* Info */}
                     <div className="text-xs sm:text-sm">
                       <h3 className="font-medium text-gray-900">{course.code}</h3>
                       <p className="text-gray-600">{course.name}</p>
