@@ -1,6 +1,6 @@
 # SavvyVitians
 <div style="display: flex; align-items: center; gap: 10;">
-  <img src="https://github.com/PrAyAg9/SavvyVitians/blob/main/public/images/logod.png" alt="Logo" style="height: 50px;" />
+  <a href="https://savvy-vitian.vercel.app"> <img src="https://github.com/PrAyAg9/SavvyVitians/blob/main/public/images/logod.png" alt="Logo" style="height: 50px;" <a/> 
   <span style="font-size: 20px; font-weight: Extra bold; margin: 0;">
      <----->
   </span>
