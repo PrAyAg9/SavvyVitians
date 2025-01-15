@@ -17,7 +17,7 @@ import RecentDiscussions from "../components/RecentDiscussions";
 import DiscussionPage from "./DiscussionPage";
 import SignUpPage from "../components/SignUpPage";
 import SignInPage from "../components/SignInPage";
-// Remove ProtectedRoute import since it's no longer used
+// yaha se railway ka dal dena auth backend ke liye
 
 // Interfaces for types
 interface Discussion {
@@ -39,7 +39,7 @@ const CommunityPage: React.FC = () => {
     description: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate(); // Add useNavigate if needed
+  const navigate = useNavigate(); // Add useNavigate if needed jab usko railway se liye 
 
   // Fetch discussions from Firestore
   useEffect(() => {
@@ -99,24 +99,24 @@ const CommunityPage: React.FC = () => {
     }
   };
 
-  // Handle loading more discussions
+
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 5);
   };
 
-  // Determine trending topics based on repliesCount
+
   const trendingTopics = [...discussions]
     .sort((a, b) => b.repliesCount - a.repliesCount)
     .slice(0, 5);
 
-  // Add sample trending topics if none are available or if user is not signed in
+
   const sampleTrendingTopics = [
     { id: "1", title: "#nextexamprep", repliesCount: 0 },
     { id: "2", title: "#placementdrive2025", repliesCount: 0 },
     { id: "3", title: "#campusfest", repliesCount: 0 },
   ];
 
-  // Current discussion for "Join Our Community" section (most recent)
+
   const currentDiscussion = discussions[0];
 
   // Sample recent discussion to display if none are available
