@@ -19,7 +19,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           key.toLowerCase().includes(value.toLowerCase()) ||
           subjects[key].name.toLowerCase().includes(value.toLowerCase())
       );
-      setSuggestions(filteredSuggestions);
+
+      const limited = filtered.slice(0,10);
+      
+      setSuggestions(limited);
     } else {
       setSuggestions([]);
     }
