@@ -3,19 +3,16 @@
 import React, { useState } from "react";
 import subjects from "../data/subjects";
 
-/** Resource object with id, name, and file URL/path */
 interface Resource {
   id: number;
   name: string;
   file: string;
 }
 
-/** Folder is a record of { teacherName: Resource[] } */
 interface Folder {
   [teacherName: string]: Resource[];
 }
 
-/** SubjectType with all folders now OPTIONAL */
 interface SubjectType {
   name: string;
   folders: {
@@ -23,63 +20,54 @@ interface SubjectType {
     Assignments?: Folder;
     "Tips to Pass"?: Resource[];
     "Previous Year Papers"?: Resource[];
-    // If you want them all optional, you can do so,
-    // e.g. "Teacher Materials"?: Folder | null, etc.
   };
 }
 
-// A basic check: subject code ≥5 chars, alphanumeric
+
 const isValidSubjectCode = (code: string) => {
   if (code.length < 5) return false;
-  const regex = /^[A-Za-z0-9]+$/; // letters + digits
+  const regex = /^[A-Za-z0-9]+$/; 
   return regex.test(code);
 };
 
 const MakeContribution: React.FC = () => {
-  // Basic subject info
   const [subjectCode, setSubjectCode] = useState("");
   const [subjectName, setSubjectName] = useState("");
 
-  // "Teacher Materials"
   const [modulesTeacher, setModulesTeacher] = useState("");
   const [modulesFiles, setModulesFiles] = useState<File[]>([]);
 
-  // "Assignments"
   const [assignmentsTeacher, setAssignmentsTeacher] = useState("");
   const [assignmentsFiles, setAssignmentsFiles] = useState<File[]>([]);
 
-  // "Tips to Pass"
+
   const [tipsFiles, setTipsFiles] = useState<File[]>([]);
 
-  // "Previous Year Papers"
+
   const [papersFiles, setPapersFiles] = useState<File[]>([]);
 
-  // Local copy of the subjects data
+
   const [localSubjects, setLocalSubjects] = useState<Record<string, SubjectType>>(subjects);
 
-  // Handle file selections for each category
+
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setter: React.Dispatch<React.SetStateAction<File[]>>
   ) => {
     if (e.target.files) {
-      setter(Array.from(e.target.files)); // convert FileList to File[]
+      setter(Array.from(e.target.files)); 
     }
   };
 
-  // Called on final submission
+
   const handleSubmit = () => {
-    // 1) Validate subject code
     if (!isValidSubjectCode(subjectCode)) {
       alert("Subject code must be at least 5 alphanumeric characters (e.g., ECE200).");
       return;
     }
 
-    // 2) Update local state
     setLocalSubjects((prevSubjects) => {
       const updated = { ...prevSubjects };
-
-      // If the subject doesn't exist, create it with an empty "folders" object
       if (!updated[subjectCode]) {
         updated[subjectCode] = {
           name: subjectName || "Unnamed Subject",
@@ -87,24 +75,20 @@ const MakeContribution: React.FC = () => {
         };
       }
 
-      // If user provided a new subject name, update it
       if (subjectName.trim()) {
         updated[subjectCode].name = subjectName;
       }
 
-      // For convenience, let's define a helper to ensure a specific folder exists
       function ensureTeacherFolder(
         subjectObj: SubjectType,
         folderKey: "Teacher Materials" | "Assignments",
         teacher: string
       ) {
-        // If the folder is missing, create it
         if (!subjectObj.folders[folderKey]) {
           subjectObj.folders[folderKey] = {};
         }
-        // Once we have it, it must be a Folder object (teacher => Resource[])
         const folder = subjectObj.folders[folderKey] as Folder;
-        // If teacher is missing, create the array
+  
         if (!folder[teacher]) {
           folder[teacher] = [];
         }
@@ -115,7 +99,7 @@ const MakeContribution: React.FC = () => {
         subjectObj: SubjectType,
         folderKey: "Tips to Pass" | "Previous Year Papers"
       ) {
-        // If the folder is missing, create empty array
+
         if (!subjectObj.folders[folderKey]) {
           subjectObj.folders[folderKey] = [];
         }
@@ -124,9 +108,6 @@ const MakeContribution: React.FC = () => {
 
       const subjectObj = updated[subjectCode];
 
-      // 3) Insert resources
-
-      // Teacher Materials
       if (modulesFiles.length > 0) {
         const teacher = modulesTeacher.trim() || "General";
         const resourcesArray = ensureTeacherFolder(subjectObj, "Teacher Materials", teacher);
@@ -153,7 +134,7 @@ const MakeContribution: React.FC = () => {
         });
       }
 
-      // Tips to Pass
+
       if (tipsFiles.length > 0) {
         const folderArr = ensureFlatFolder(subjectObj, "Tips to Pass");
         tipsFiles.forEach((file) => {
@@ -165,7 +146,6 @@ const MakeContribution: React.FC = () => {
         });
       }
 
-      // Previous Year Papers
       if (papersFiles.length > 0) {
         const folderArr = ensureFlatFolder(subjectObj, "Previous Year Papers");
         papersFiles.forEach((file) => {
@@ -201,7 +181,6 @@ const MakeContribution: React.FC = () => {
           Provide a subject code, name, and upload any of the materials below. Only fill what you need!
         </p>
 
-        {/* Subject Details */}
         <div className="mt-6 flex flex-col gap-4">
           <input
             type="text"
