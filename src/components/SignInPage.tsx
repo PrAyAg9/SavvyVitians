@@ -38,7 +38,7 @@ const SignInPage: React.FC = () => {
           className="flex items-center justify-center w-full bg-red-600 text-white py-3 rounded-md hover:bg-red-700 transition-transform transform hover:scale-105"
         >
           <img
-            src="../../public/images/GOOGLE.webp"
+            src="../../public/images/GOOGLE.png"
             alt="Google"
             className="w-5 h-5 mr-2"
           />
